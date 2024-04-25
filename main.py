@@ -3,6 +3,10 @@ class Node:
         self.data = data
         self.next = None
 
+    def __lt__(self, other):
+        return self.data < other.data
+
+
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -17,20 +21,6 @@ class LinkedList:
                 current = current.next
             current.next = new_node
 
-    def sort(self):
-        if self.head is None:
-            return
-
-        swapped = True
-        while swapped:
-            swapped = False
-            current = self.head
-            while current.next:
-                if current.data > current.next.data:
-                    current.data, current.next.data = current.next.data, current.data
-                    swapped = True
-                current = current.next
-
     def display(self):
         elements = []
         current = self.head
@@ -40,7 +30,6 @@ class LinkedList:
         print(elements)
 
 
-
 def main():
     linked_list = LinkedList()
     data = list(map(int, input("Enter the elements of the array separated by space: ").split()))
@@ -48,10 +37,15 @@ def main():
         linked_list.add_node(item)
     print("Unsorted linked list:")
     linked_list.display()
-    linked_list.sort()
+
+    sorted_list = sorted([node.data for node in linked_list])
+    sorted_linked_list = LinkedList()
+    for item in sorted_list:
+        sorted_linked_list.add_node(item)
+
     print("Sorted linked list:")
-    linked_list.display()
+    sorted_linked_list.display()
 
 
-if __name__ == "__main__":
+if __name__ == "main":
     main()
