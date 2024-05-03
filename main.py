@@ -1,3 +1,6 @@
+import unittest
+
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -29,6 +32,12 @@ class LinkedList:
             current = current.next
         print(elements)
 
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current
+            current = current.next
+
 
 def main():
     linked_list = LinkedList()
@@ -46,6 +55,30 @@ def main():
     print("Sorted linked list:")
     sorted_linked_list.display()
 
+class TestLinkedList(unittest.TestCase):
+    def test_add_node(self):
+        linked_list = LinkedList()
+        linked_list.add_node(5)
+        self.assertEqual(linked_list.head.data, 5)
 
-if __name__ == "main":
+    def test_display(self):
+        linked_list = LinkedList()
+        linked_list.add_node(1)
+        linked_list.add_node(2)
+        linked_list.add_node(3)
+        self.assertEqual(linked_list.display(), [1, 2, 3])
+
+    def test_iter(self):
+        linked_list = LinkedList()
+        linked_list.add_node(1)
+        linked_list.add_node(2)
+        linked_list.add_node(3)
+        elements = [node.data for node in linked_list.iter()]
+        self.assertEqual(elements, [1, 2, 3])
+
+if __name__ == "__main__":
     main()
+    unittest.main()
+
+
+
